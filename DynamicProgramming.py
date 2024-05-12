@@ -20,10 +20,6 @@ def fibonacci(n, memo={}):
     return memo[n]
 
 
-
-
-
-
 def fibonacci(n, memo={}):
     if n in memo:
         return memo[n]
@@ -62,19 +58,6 @@ def targetSum(n, target, memo={}):
     return False
 
 
-
-def ClimbingStairsOwn(n):
-    if n == 1:
-        return 1
-    if n < 1:
-        return 0
-
-
-
-
-
-
-
 def howSum(n, target, memo={}):
     if target in memo:
         return memo[target]
@@ -93,14 +76,37 @@ def howSum(n, target, memo={}):
     return None
 
 
+def bestSum(n, target, memo={}):
+    if target in memo:
+        return memo[target]
+    if target == 0:
+        return []
+    if target < 0:
+        return None
+
+    shortestCombination = None
+    for i in n:
+        remainder = target - i
+        remainderResult = bestSum(n, remainder, memo)
+
+        if remainderResult is not None:
+            combination = remainderResult + [i]
+
+            if shortestCombination is None or len(combination) < len(shortestCombination):
+                shortestCombination = combination
+        # // return memo[target]
+
+        memo[target] = shortestCombination
+
+    return shortestCombination
 
 
 #
 # def bestSum(n, target, memo={}):
 
 
-
 print(climbStairs(5))
+# print(bestSum([2, 3, 4, 5, 5, 6, 7, 8], 10))
 # print(fibonacci(5))
 #
 # print(fibonacci(60))
@@ -114,3 +120,5 @@ print(climbStairs(5))
 # print(howSum([2, 3, 4, 5, 5, 6, 7, 8, 10], 300))
 # print(howSum([2, 3, 4, 5, 5, 6, 7, 8], 10))
 
+# print(bestSum([1 , 4, 5], 8))
+print(bestSum([2, 3, 4, 5, 5, 6, 7, 8, 10], 300))
